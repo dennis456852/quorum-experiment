@@ -83,10 +83,11 @@ fi
 echo "[*] Starting $numNodes Ethereum nodes with ChainID and NetworkId of $NETWORK_ID"
 QUORUM_GETH_ARGS=${QUORUM_GETH_ARGS:-}
 set -v
-ARGS="--nodiscover --verbosity 5 --networkid $NETWORK_ID --raft --rpc --rpccorsdomain=* --rpcvhosts=* --rpcaddr 0.0.0.0 --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft,zsl --emitcheckpoints --unlock 0 --password passwords.txt $QUORUM_GETH_ARGS"
+ARGS="--nodiscover --verbosity 5 --networkid $NETWORK_ID --raft --rpc --rpccorsdomain=* --rpcvhosts=* --rpcaddr 0.0.0.0 --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft,zsl --ws --wsaddr 0.0.0.0 --wsapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft,zsl --wsorigins "*" --emitcheckpoints --unlock 0 --password passwords.txt $QUORUM_GETH_ARGS"
 
 basePort=21000
 rpcPort=22000
+wsport=23000
 raftPort=50401
 
 INDEX_NODE=$(cat ~/node_config | grep "NODE_INDEX" | awk -F '=' '{print $2}')
@@ -96,7 +97,7 @@ permissioned=
 if [[ $INDEX_NODE -le 4 ]]; then
     permissioned="--permissioned"
 fi
-PRIVATE_CONFIG=qdata/c${INDEX_NODE}/tm.ipc nohup geth --datadir qdata/dd ${ARGS} ${permissioned} --raftport ${raftPort} --rpcport ${rpcPort} --port ${port} 2>>qdata/logs/geth.log &
+PRIVATE_CONFIG=qdata/c${INDEX_NODE}/tm.ipc nohup geth --datadir qdata/dd ${ARGS} ${permissioned} --raftport ${raftPort} --rpcport ${rpcPort} --port ${port} --wsport ${wsport} 2>>qdata/logs/geth.log &
 
 set +v
 
