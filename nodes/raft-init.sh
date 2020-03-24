@@ -60,7 +60,7 @@ else
 fi
 
 key1=$((${INDEX_NODE}*2-1))
-key2=$((${INDEX_NODE*2}))
+key2=$((${INDEX_NODE}*2))
 cp permissioned-nodes.json qdata/dd/static-nodes.json
 cp keys/key${key1} qdata/dd/keystore
 cp keys/key${key2} qdata/dd/keystore
