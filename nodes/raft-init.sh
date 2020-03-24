@@ -59,8 +59,7 @@ else
     echo "[*] Configuring node $INDEX_NODE"
 fi
 cp permissioned-nodes.json qdata/dd/static-nodes.json
-cp keys/key${INDEX_NODE*2-1} qdata/dd/keystore
-cp keys/key${INDEX_NODE*2} qdata/dd/keystore
+cp keys/key${INDEX_NODE} qdata/dd/keystore
 cp raft/nodekey${INDEX_NODE} qdata/dd/geth/nodekey
 geth --datadir qdata/dd init genesis.json
 
