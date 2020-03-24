@@ -58,9 +58,12 @@ if [[ $INDEX_NODE -le 4 ]]; then
 else
     echo "[*] Configuring node $INDEX_NODE"
 fi
+
+key1=$((${INDEX_NODE}*2-1))
+key2=$((${INDEX_NODE*2}))
 cp permissioned-nodes.json qdata/dd/static-nodes.json
-cp keys/key${INDEX_NODE*2-1} qdata/dd/keystore
-cp keys/key${INDEX_NODE*2} qdata/dd/keystore
+cp keys/key${key1} qdata/dd/keystore
+cp keys/key${key2} qdata/dd/keystore
 cp raft/nodekey${INDEX_NODE} qdata/dd/geth/nodekey
 geth --datadir qdata/dd init genesis.json
 
